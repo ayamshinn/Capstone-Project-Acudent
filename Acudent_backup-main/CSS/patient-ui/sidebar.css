@@ -1,104 +1,193 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
-    background-color: #ffffff;
-    font-family: "Montserrat", sans-serif;
-}
-
-html, body {
-    height: 100%;
-}
-
-.container {
-    display: flex; /* Allow sidebar and content side by side if needed */
-    height: 100vh;  /* Full viewport height */
-    width: 100%;    /* Full width */
-}
-
-.sidebar {
-    position: fixed;
-    margin-top: 144px;
-    background-color: #FEF3E7;
-    border-radius: 5px;
-    width: 20%;         /* Fixed or relative width */
-    height: 100%;         /* Full height of container */
-    padding: 20px;
+/* =========== Sidebar Container =========== */
+.sidebar-container {
+    width: 250px;
+    height: 100vh;
+    background-color: var(--color-secondary);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    border: 1px solid #000;
-}
-.profilepic-user{
-   text-align: center;
-}
-#profile-pic {
-    width: 100px;  /* You can adjust this based on your needs */
-    height: 100px;
-    border-radius: 50%;  /* Make the image round */
-    margin-bottom: 20px;  /* Space between image and username */
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    border-bottom-right-radius: 20px;
+    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.15);
 }
 
-#username-display {
-    margin-top: 40%;
-    margin-bottom: 50px;  /* Space between username and the nav items */
-    font-size: 22px;
-    text-align: center;
+/* =========== Scrollbar Styling =========== */
+.sidebar-container::-webkit-scrollbar {
+    width: 8px;
+}
+.sidebar-container::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 4px;
+}
+.sidebar-container::-webkit-scrollbar-track {
+    background-color: var(--color-secondary);
 }
 
-.nav-buttons {
+/* =========== Logo Section =========== */
+.sidebar-top-logo {
     display: flex;
-    flex-direction: column; /* Stack buttons vertically */
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid var(--color-primary);
     
-    
-}
-.nav-item {
-  width: 100%; /* make the container full width */
-  margin-bottom: 20px;
 }
 
-.nav-item button {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 20px;             /* spacing between icon and text */
-  padding: 20px 40px;
-  margin-left: 5%;
-  font-size: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  text-align: left;
-  background-color: #ffffff;
-  border: 1px solid #502C00;
-  transition: background 0.3s ease;
+.sidebar-top-logo .logo-img {
+    max-width: 60px;
+    display: block;
 }
 
-.nav-item button i {
-  font-size: 22px;
+.sidebar-top-logo .logo-text h3,
+.sidebar-top-logo .logo-text h5 {
+    color: var(--color-tertiary);
+    margin: 0;
 }
 
-/* Optional hover effect */
-.nav-item button:hover {
-    background-color: #F5E3CD ;
-  box-shadow: rgb(0, 0, 0);
+.sidebar-top-logo .logo-text h3 {
+    font-size: 1.4rem;
+}
+.sidebar-top-logo .logo-text h5 {
+    font-size: 0.7rem;
+    white-space: nowrap;
 }
 
-.out{
-    font-size: 22px;
-    margin-top: 30%;
-    margin-left: 20%;
-    padding: 15px;
-    width: 60%;
-    border: 1px solid #502C00;
-    border-radius: 20px;
+/* =========== Sidebar Content =========== */
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-secondary);
+}
+
+/* =========== User Profile =========== */
+.sidebar-user-profile-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem 0 .2rem 0 ;
+    margin: 1.5rem .8rem 2.5rem 0;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--color-primary);
+}
+
+.sidebar-userprofile-img {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--color-tertiary);
+    background-color: #fff;
+}
+
+.sidebar-userprofile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sidebar-userprofile-name-container h3 {
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* =========== Sidebar Navigation =========== */
+.sidebar-navigation {
+    width: 100%;
+}
+
+.sidebar-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar-nav-list li {
+    width: 100%;
+}
+
+.sidebar-section-title {
+    font-size: 0.55rem;
+    font-weight: 500;
+    color: var(--color-tertiary);
+    text-transform: uppercase;
+    margin: 1.5rem 0 0.5rem 1.2rem; 
+}
+
+.sidebar-section-title:first-of-type {
+    margin-top: 0.5rem; 
+}
+
+/* =========== Sidebar Buttons =========== */
+.btn-sidebar {
+    display: flex;
+    align-items: center;
+    width: 98.5%;
+    padding: 10px 20px;
+    border: none;
+    background: transparent;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
     cursor: pointer;
-}
-.out:hover{
-     background-color: #F5E3CD;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
 }
 
- 
+.btn-sidebar i {
+    min-width: 20px;
+    text-align: center;
+    margin-right: 0.5rem;
+}
+.btn-sidebar:hover {
+    background-color: var(--color-primary,);
+    color: var(--color-text);
+       font-weight: 550;
+}
+
+.btn-sidebar.active {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    font-weight: 550;
+}
+
+.btn-sidebar:not(.sidebar-logout-btn):hover::before,
+.btn-sidebar:not(.sidebar-logout-btn).active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background-color: var(--color-text);
+}
+.btn-backtohome{
+    margin-bottom: 1rem!important;
+}
+
+/* =========== Logout Button =========== */
+.sidebar-logout {
+    margin-top: auto;
+    width: 100%;
+    margin-bottom: 1rem!important;
+}
+
+.sidebar-logout-btn {
+    width: 100%;
+    border-radius: 20px;
+
+}
+.sidebar-logout-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    font-weight: 550;
+}

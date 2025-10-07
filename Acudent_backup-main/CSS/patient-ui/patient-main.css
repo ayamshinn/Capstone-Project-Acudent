@@ -21,3 +21,26 @@ html,
 body {
     height: 100%;
 }
+
+.user-patient-content-area {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  min-height: 100vh;
+  background-color: #ffffff;
+  overflow-x: clip;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+
+}
+
+.user-patient-content-area.active {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+
+}
+
+.main-content-container {
+    padding: 50px 10px 10px 10px;
+    min-height: calc(100vh - 60px);
+    transition: margin-left 0.3s ease;
+}

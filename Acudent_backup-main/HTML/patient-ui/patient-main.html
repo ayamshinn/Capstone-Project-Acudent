@@ -8,7 +8,8 @@
 
     <link rel="stylesheet" href="../../CSS/patient-ui/sidebar.css">
     <link rel="stylesheet" href="../../CSS/patient-ui/patient-main.css">
-    <link rel="stylesheet" href="../../CSS/patient-ui/content-area.css">
+    <link rel="stylesheet" href="../../CSS/patient-ui/content-area-topbar.css">
+    <link rel="stylesheet" href="../../CSS/patient-ui/navigation-content/patient-dashboard.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -24,7 +25,7 @@
 
         <!-- ============================Sidenar Container============================ -->
 
-        <aside class="sidebar-container">
+        <aside class="patient-sidebar-container" id="patient-sidebar-container">
             <!-- Logo -->
             <div class="sidebar-top-logo mx-3">
                 <img src="../../Pictures/user-interface/banners-images-logo/logo.png" alt="Clinic Logo"
@@ -58,8 +59,7 @@
                                 <i class="fas fa-user"></i> <span>My Profile</span></a></li>
                         <li><a href="#" class="btn-sidebar d-flex align-items-center" data-page="appointment">
                                 <i class="fas fa-calendar"></i> <span>My Appointment</span></a></li>
-                        <li><a href="#" class="btn-sidebar d-flex align-items-center" data-page="messages">
-                                <i class="fa-solid fa-envelope-circle-check"></i> <span>Messages</span></a></li>
+
 
                         <!-- ========== Components Section ========== -->
                         <li class="sidebar-section-title">Components</li>
@@ -71,7 +71,6 @@
 
                     </ul>
                 </nav>
-
                 <!-- Logout -->
                 <div class="sidebar-logout pe-2">
                     <a href="#" class="btn-sidebar sidebar-logout-btn d-flex align-items-center" id="logoutBtn">
@@ -82,22 +81,24 @@
             </div>
         </aside>
 
+        <script src="../../Javascript/patient-ui/patient-sidebar.js"></script>
 
         <!-- ============================Content Area Container============================ -->
 
-        <main class="user-patient-content-area">
+        <main class="user-patient-content-area" id="user-patient-content-area">
 
-            <div class="user-patient-topbar">
+            <div class="user-patient-topbar" id="user-patient-topbar">
                 <div class="topbar-left">
                     <div class="toggle">
                         <i class="fa-solid fa-bars"></i>
                     </div>
                     <div class="today-date" id="today-date">
-                        <script src="../../Javascript/patient-ui/topbar-date.js"></script>
+                        <script src="../../Javascript/patient-ui/patient-topbar-date.js"></script>
                     </div>
                 </div>
+
                 <div class="topbar-greeting">
-                    <h3>Good to have you back!</h3>
+                    <h3>Welcome, good to have you back!</h3>
                 </div>
 
                 <div class="contentarea-topbar-profile">
@@ -125,9 +126,8 @@
 
             <div class="main-content-container">
 
-                <div class="top-bar"></div>
-                <div class="user-patient-dashboard">
-                    
+                <div class="user-patient-dashboard-main-container" id="user-patient-dashboard">
+                    <script src="../../Javascript/patient-ui/patient-dashboard/patient-dashboard.js"></script>
                 </div>
                 <div class="user-patient-myinformation">
 

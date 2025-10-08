@@ -22,11 +22,12 @@
   color: var(--color-text);
   position: fixed;
   transition: left 0.3s ease, width 0.3s ease;
+  z-index: 1000;
 }
 
 .user-patient-topbar.active {
   left: 80px;
-  width: calc(100% - 90px);
+  width: calc(100% - 80px);
   transition: left 0.3s ease, width 0.3s ease;
 }
 

@@ -3,474 +3,690 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Personal Information</title>
+    <title>My Account - Dental MIS</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'beige-50': '#faf8f5',
+                        'beige-100': '#f5f1ea',
+                        'beige-200': '#ebe3d5',
+                        'brown-100': '#e8ddd4',
+                        'brown-200': '#d4c4b0',
+                        'brown-300': '#b8a082',
+                        'brown-400': '#9c7c54',
+                        'brown-500': '#8b6914',
+                        'brown-600': '#7a5a12',
+                        'brown-700': '#6b4e10'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
             box-sizing: border-box;
         }
-        
-        .profile-picture {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
-            border: 3px solid #81d4fa;
+        .profile-shadow {
+            box-shadow: 0 4px 6px -1px rgba(139, 105, 20, 0.1), 0 2px 4px -1px rgba(139, 105, 20, 0.06);
         }
-        
-        .section-card {
-            background: #fafafa;
-            border: 1px solid #e5e7eb;
-            transition: all 0.2s ease;
+        .tab-content {
+            display: none;
         }
-        
-        .section-card:hover {
-            border-color: #60a5fa;
-            box-shadow: 0 2px 8px rgba(96, 165, 250, 0.1);
+        .tab-content.active {
+            display: block;
         }
-        
-        .form-input {
-            transition: all 0.2s ease;
+        .tab-button.active {
+            background-color: #8b6914;
+            color: white;
         }
-        
-        .form-input:focus {
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+        .sidebar {
+            width: 256px;
+            transition: width 0.3s ease-in-out;
         }
-        
-        .radio-option {
-            transition: all 0.2s ease;
+        .sidebar.collapsed {
+            width: 80px;
         }
-        
-        .radio-option:hover {
-            background-color: #f8fafc;
+        .main-content {
+            margin-left: 256px;
+            transition: margin-left 0.3s ease-in-out;
         }
-        
-        .submit-btn {
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            transition: all 0.3s ease;
+        .main-content.collapsed {
+            margin-left: 80px;
         }
-        
-        .submit-btn:hover {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        .sidebar-text {
+            opacity: 1;
+            transition: opacity 0.2s ease-in-out;
+        }
+        .sidebar.collapsed .sidebar-text {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .nav-item {
+            position: relative;
+        }
+        .nav-item .tooltip {
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #374151;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 1000;
+            margin-left: 10px;
+        }
+        .nav-item .tooltip::before {
+            content: '';
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 5px solid transparent;
+            border-right-color: #374151;
+        }
+        .sidebar.collapsed .nav-item:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        .account-section {
+            transition: all 0.3s ease-in-out;
+        }
+        .sidebar.collapsed .account-section {
+            padding: 16px 8px;
+        }
+        .sidebar.collapsed .account-info {
+            display: none;
+        }
+        .sidebar.collapsed .account-button {
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-full">
-    <div class="max-w-4xl mx-auto p-6">
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">Patient Personal Information</h1>
-            <p class="text-gray-600">Please fill out all required information accurately</p>
-        </div>
-
-        <form id="patientForm" class="space-y-8">
-            <!-- Profile Header Section -->
-            <div class="section-card rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <span class="w-2 h-6 bg-blue-500 rounded-full mr-3"></span>
-                    Profile Information
-                </h2>
-                
-                <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
-                    <div class="flex flex-col items-center">
-                        <div class="profile-picture rounded-full flex items-center justify-center mb-3">
-                            <svg class="w-12 h-12 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <button type="button" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Change Photo</button>
-                    </div>
-                    
-                    <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                            <input type="text" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Enter full name">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
-                            <input type="text" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Enter username">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                            <input type="password" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="••••••••">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Patient ID</label>
-                            <input type="text" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none bg-gray-100" placeholder="Auto-generated" readonly>
-                        </div>
-                    </div>
-                </div>
+<body class="bg-beige-50 min-h-full">
+    <!-- Top Bar -->
+    <header class="bg-white border-b border-brown-200 profile-shadow fixed w-full top-0 z-30">
+        <div class="flex justify-between items-center h-16 px-6">
+            <div class="flex items-center">
+                <button onclick="toggleSidebar()" class="text-brown-600 hover:text-brown-700 mr-4 p-2 rounded-md hover:bg-beige-100 transition-colors">
+                    <span id="toggleIcon">☰</span>
+                </button>
+                <button onclick="goToDashboard()" class="text-brown-600 hover:text-brown-700 mr-4">
+                    ← Back to Dashboard
+                </button>
+                <h1 class="text-2xl font-bold text-brown-700">🦷 DentalMIS</h1>
             </div>
-
-            <!-- Personal Details Section -->
-            <div class="section-card rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <span class="w-2 h-6 bg-green-500 rounded-full mr-3"></span>
-                    Personal Details
-                </h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
-                        <input type="text" required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Last name">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-brown-200 rounded-full flex items-center justify-center">
+                        <span class="text-sm text-brown-600">👤</span>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
-                        <input type="text" required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="First name">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Middle Initial</label>
-                        <input type="text" maxlength="1" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none text-center" placeholder="M">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Gender *</label>
-                        <select required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
-                            <option value="">Select gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                            <option value="prefer-not-to-say">Prefer not to say</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Birthdate *</label>
-                        <input type="date" required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" onchange="calculateAge()">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Age</label>
-                        <input type="number" id="ageField" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none bg-gray-100" placeholder="Auto-calculated" readonly>
-                    </div>
-                    <div class="md:col-span-2 lg:col-span-3">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Nationality</label>
-                        <input type="text" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Enter nationality">
-                    </div>
+                    <span class="text-brown-700 font-medium">Sarah Johnson</span>
                 </div>
-            </div>
-
-            <!-- Contact Information Section -->
-            <div class="section-card rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <span class="w-2 h-6 bg-purple-500 rounded-full mr-3"></span>
-                    Contact Information
-                </h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
-                        <input type="tel" required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="+1 (555) 123-4567">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                        <input type="email" required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="email@example.com">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Address *</label>
-                        <textarea required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" rows="3" placeholder="Enter complete address"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Medical History Section -->
-            <div class="section-card rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <span class="w-2 h-6 bg-red-500 rounded-full mr-3"></span>
-                    Medical History
-                </h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Current Medications</label>
-                        <textarea class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" rows="3" placeholder="List current medications and dosages"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Past Surgeries</label>
-                        <textarea class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" rows="3" placeholder="List any previous surgeries and dates"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Allergies</label>
-                        <textarea class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" rows="3" placeholder="List any known allergies"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Menstruation (if applicable)</label>
-                        <textarea class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" rows="3" placeholder="Menstrual cycle information"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Medical Conditions Section -->
-            <div class="section-card rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <span class="w-2 h-6 bg-orange-500 rounded-full mr-3"></span>
-                    Medical Conditions
-                </h2>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Current Medical Conditions</label>
-                    <textarea class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" rows="4" placeholder="Please describe any current medical conditions, chronic illnesses, or ongoing health concerns"></textarea>
-                </div>
-            </div>
-
-            <!-- HMO Information Section -->
-            <div class="section-card rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <span class="w-2 h-6 bg-teal-500 rounded-full mr-3"></span>
-                    HMO Information
-                </h2>
-                
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-3">Do you have HMO coverage? *</label>
-                    <div class="flex gap-4">
-                        <label class="radio-option flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer">
-                            <input type="radio" name="hmo_coverage" value="yes" class="mr-3 text-blue-600" onchange="toggleHMOFields(true)">
-                            <span class="text-gray-700">Yes</span>
-                        </label>
-                        <label class="radio-option flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer">
-                            <input type="radio" name="hmo_coverage" value="no" class="mr-3 text-blue-600" onchange="toggleHMOFields(false)">
-                            <span class="text-gray-700">No</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div id="hmoFields" class="hidden space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">HMO Provider</label>
-                            <input type="text" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Enter HMO provider name">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Membership ID</label>
-                            <input type="text" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Enter membership ID">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Plan Type</label>
-                            <select class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
-                                <option value="">Select plan type</option>
-                                <option value="basic">Basic</option>
-                                <option value="premium">Premium</option>
-                                <option value="family">Family</option>
-                                <option value="individual">Individual</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Validity Date</label>
-                            <input type="date" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">HMO Card Image</label>
-                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
-                            <input type="file" id="hmoCard" accept="image/*" class="hidden" onchange="handleFileUpload(this, 'hmoCardPreview')">
-                            <label for="hmoCard" class="cursor-pointer">
-                                <div class="text-gray-500 mb-2">
-                                    <svg class="mx-auto h-12 w-12" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-                                </div>
-                                <p class="text-sm text-gray-600">Click to upload HMO card image</p>
-                                <p class="text-xs text-gray-400 mt-1">PNG, JPG up to 10MB</p>
-                            </label>
-                            <div id="hmoCardPreview" class="mt-4 hidden"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Letter of Authorization Section -->
-            <div class="section-card rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <span class="w-2 h-6 bg-indigo-500 rounded-full mr-3"></span>
-                    Letter of Authorization
-                </h2>
-                
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-3">Do you have a Letter of Authorization? *</label>
-                    <div class="flex gap-4">
-                        <label class="radio-option flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer">
-                            <input type="radio" name="letter_auth" value="yes" class="mr-3 text-blue-600" onchange="toggleAuthFields(true)">
-                            <span class="text-gray-700">Yes</span>
-                        </label>
-                        <label class="radio-option flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer">
-                            <input type="radio" name="letter_auth" value="no" class="mr-3 text-blue-600" onchange="toggleAuthFields(false)">
-                            <span class="text-gray-700">No</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div id="authFields" class="hidden">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Upload Letter of Authorization</label>
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
-                        <input type="file" id="authLetter" accept=".pdf,.doc,.docx,image/*" class="hidden" onchange="handleFileUpload(this, 'authLetterPreview')">
-                        <label for="authLetter" class="cursor-pointer">
-                            <div class="text-gray-500 mb-2">
-                                <svg class="mx-auto h-12 w-12" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                    <path d="M12 4v44l8-8 8 8V4H12z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </div>
-                            <p class="text-sm text-gray-600">Click to upload authorization letter</p>
-                            <p class="text-xs text-gray-400 mt-1">PDF, DOC, DOCX, or image files</p>
-                        </label>
-                        <div id="authLetterPreview" class="mt-4 hidden"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Patients Under 18 Section -->
-            <div class="section-card rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <span class="w-2 h-6 bg-pink-500 rounded-full mr-3"></span>
-                    For Patients Under 18
-                </h2>
-                
-                <p class="text-sm text-gray-600 mb-4">Please fill this section if the patient is under 18 years old</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Guardian's Full Name</label>
-                        <input type="text" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Enter guardian's name">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Guardian's Contact Number</label>
-                        <input type="tel" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="+1 (555) 123-4567">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Relationship to Patient</label>
-                        <select class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none">
-                            <option value="">Select relationship</option>
-                            <option value="parent">Parent</option>
-                            <option value="legal-guardian">Legal Guardian</option>
-                            <option value="grandparent">Grandparent</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Guardian's Email</label>
-                        <input type="email" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="guardian@example.com">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Consent and Agreement Section -->
-            <div class="section-card rounded-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <span class="w-2 h-6 bg-gray-600 rounded-full mr-3"></span>
-                    Consent and Agreement
-                </h2>
-                
-                <div class="bg-gray-50 rounded-lg p-4 mb-6">
-                    <h3 class="font-medium text-gray-800 mb-3">Patient Consent Statement</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed mb-4">
-                        I hereby consent to the collection, use, and disclosure of my personal health information by this healthcare facility for the purposes of providing medical care, treatment, and related healthcare services. I understand that my information will be kept confidential and used only for legitimate medical purposes in accordance with applicable privacy laws and regulations.
-                    </p>
-                    <p class="text-sm text-gray-600 leading-relaxed">
-                        I acknowledge that I have read and understood the privacy policy and terms of service. I confirm that all information provided in this form is accurate and complete to the best of my knowledge.
-                    </p>
-                </div>
-                
-                <label class="flex items-start space-x-3 cursor-pointer">
-                    <input type="checkbox" required class="mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                    <span class="text-sm text-gray-700">
-                        I have read, understood, and agree to the above consent statement and terms. I confirm that all information provided is accurate and complete. *
-                    </span>
-                </label>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="text-center pt-6">
-                <button type="submit" class="submit-btn text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg">
-                    Submit Patient Information
+                <button class="text-brown-600 hover:text-brown-700 px-3 py-2 rounded-md text-sm relative">
+                    🔔
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </button>
+                <button class="text-brown-600 hover:text-brown-700 px-3 py-2 rounded-md text-sm">
+                    Logout
                 </button>
             </div>
-        </form>
+        </div>
+    </header>
+
+    <div class="flex pt-16">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-white border-r border-brown-200 profile-shadow fixed h-full overflow-y-auto">
+            <nav class="p-4 space-y-2">
+                <!-- My Account Section -->
+                <div class="account-section bg-gradient-to-br from-brown-100 to-beige-100 rounded-lg p-4 mb-4">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="w-10 h-10 bg-brown-500 rounded-full flex items-center justify-center profile-shadow flex-shrink-0">
+                            <span class="text-white font-bold">SJ</span>
+                        </div>
+                        <div class="account-info sidebar-text">
+                            <h3 class="font-semibold text-brown-700 text-sm">Sarah Johnson</h3>
+                            <p class="text-brown-600 text-xs">Patient ID: #12345</p>
+                        </div>
+                    </div>
+                    <button class="account-button w-full bg-brown-500 text-white px-3 py-2 rounded-md text-sm font-medium flex items-center justify-center space-x-2">
+                        <span>⚙️</span>
+                        <span class="sidebar-text">My Account</span>
+                    </button>
+                </div>
+
+                <a href="#" onclick="goToDashboard()" class="nav-item flex items-center space-x-3 text-brown-600 hover:text-brown-700 hover:bg-beige-100 px-3 py-2 rounded-md transition-colors">
+                    <span class="flex-shrink-0">📊</span>
+                    <span class="sidebar-text">Dashboard</span>
+                    <div class="tooltip">Dashboard</div>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 text-brown-600 hover:text-brown-700 hover:bg-beige-100 px-3 py-2 rounded-md transition-colors">
+                    <span class="flex-shrink-0">📅</span>
+                    <span class="sidebar-text">Appointments</span>
+                    <div class="tooltip">Appointments</div>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 text-brown-600 hover:text-brown-700 hover:bg-beige-100 px-3 py-2 rounded-md transition-colors">
+                    <span class="flex-shrink-0">🦷</span>
+                    <span class="sidebar-text">Treatment History</span>
+                    <div class="tooltip">Treatment History</div>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 text-brown-600 hover:text-brown-700 hover:bg-beige-100 px-3 py-2 rounded-md transition-colors">
+                    <span class="flex-shrink-0">💰</span>
+                    <span class="sidebar-text">Billing</span>
+                    <div class="tooltip">Billing</div>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 text-brown-600 hover:text-brown-700 hover:bg-beige-100 px-3 py-2 rounded-md transition-colors">
+                    <span class="flex-shrink-0">📋</span>
+                    <span class="sidebar-text">Medical Records</span>
+                    <div class="tooltip">Medical Records</div>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 text-brown-600 hover:text-brown-700 hover:bg-beige-100 px-3 py-2 rounded-md transition-colors">
+                    <span class="flex-shrink-0">📞</span>
+                    <span class="sidebar-text">Support</span>
+                    <div class="tooltip">Support</div>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="mainContent" class="main-content flex-1 p-6">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-brown-700">My Account</h2>
+                        <p class="mt-2 text-brown-600">Manage your personal information and account settings</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-16 h-16 bg-brown-500 rounded-full flex items-center justify-center profile-shadow">
+                            <span class="text-white font-bold text-xl">SJ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="bg-white rounded-lg profile-shadow mb-6">
+                <div class="border-b border-brown-200">
+                    <nav class="flex space-x-8 px-6">
+                        <button onclick="showTab('personal')" class="tab-button active py-4 px-2 border-b-2 border-transparent text-sm font-medium text-brown-600 hover:text-brown-700 hover:border-brown-300">
+                            Personal Information
+                        </button>
+                        <button onclick="showTab('contact')" class="tab-button py-4 px-2 border-b-2 border-transparent text-sm font-medium text-brown-600 hover:text-brown-700 hover:border-brown-300">
+                            Contact Details
+                        </button>
+                        <button onclick="showTab('insurance')" class="tab-button py-4 px-2 border-b-2 border-transparent text-sm font-medium text-brown-600 hover:text-brown-700 hover:border-brown-300">
+                            Insurance
+                        </button>
+                        <button onclick="showTab('preferences')" class="tab-button py-4 px-2 border-b-2 border-transparent text-sm font-medium text-brown-600 hover:text-brown-700 hover:border-brown-300">
+                            Preferences
+                        </button>
+                        <button onclick="showTab('security')" class="tab-button py-4 px-2 border-b-2 border-transparent text-sm font-medium text-brown-600 hover:text-brown-700 hover:border-brown-300">
+                            Security
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Personal Information Tab -->
+                <div id="personal" class="tab-content active p-6">
+                    <h3 class="text-lg font-semibold text-brown-700 mb-6">Personal Information</h3>
+                    <form onsubmit="savePersonalInfo(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">First Name</label>
+                                <input type="text" value="Sarah" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Last Name</label>
+                                <input type="text" value="Johnson" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Date of Birth</label>
+                                <input type="date" value="1985-03-15" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Gender</label>
+                                <select class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                    <option value="female" selected>Female</option>
+                                    <option value="male">Male</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not-to-say">Prefer not to say</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Marital Status</label>
+                                <select class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                    <option value="married" selected>Married</option>
+                                    <option value="single">Single</option>
+                                    <option value="divorced">Divorced</option>
+                                    <option value="widowed">Widowed</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Occupation</label>
+                                <input type="text" value="Marketing Manager" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-brown-700 mb-2">Emergency Contact</label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" placeholder="Contact Name" value="Michael Johnson" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                <input type="tel" placeholder="Contact Phone" value="(555) 987-6543" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-brown-500 hover:bg-brown-600 text-white px-6 py-2 rounded-md font-medium transition-colors">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Contact Details Tab -->
+                <div id="contact" class="tab-content p-6">
+                    <h3 class="text-lg font-semibold text-brown-700 mb-6">Contact Details</h3>
+                    <form onsubmit="saveContactInfo(event)" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-brown-700 mb-2">Email Address</label>
+                            <input type="email" value="sarah.johnson@email.com" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Primary Phone</label>
+                                <input type="tel" value="(555) 123-4567" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Secondary Phone</label>
+                                <input type="tel" value="(555) 234-5678" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-brown-700 mb-2">Home Address</label>
+                            <div class="space-y-4">
+                                <input type="text" placeholder="Street Address" value="123 Oak Street" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <input type="text" placeholder="City" value="Springfield" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                    <input type="text" placeholder="State" value="IL" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                    <input type="text" placeholder="ZIP Code" value="62701" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-brown-500 hover:bg-brown-600 text-white px-6 py-2 rounded-md font-medium transition-colors">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Insurance Tab -->
+                <div id="insurance" class="tab-content p-6">
+                    <h3 class="text-lg font-semibold text-brown-700 mb-6">Insurance Information</h3>
+                    <form onsubmit="saveInsuranceInfo(event)" class="space-y-6">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                            <div class="flex items-center">
+                                <span class="text-green-600 text-lg mr-2">✅</span>
+                                <div>
+                                    <h4 class="font-medium text-green-800">Insurance Verified</h4>
+                                    <p class="text-green-700 text-sm">Your insurance information was last verified on December 1, 2023</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Insurance Provider</label>
+                                <input type="text" value="Blue Cross Blue Shield" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Policy Number</label>
+                                <input type="text" value="BCBS123456789" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Group Number</label>
+                                <input type="text" value="GRP001234" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Member ID</label>
+                                <input type="text" value="MEM987654321" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-brown-700 mb-2">Primary Subscriber</label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" placeholder="Subscriber Name" value="Sarah Johnson" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                <input type="date" placeholder="Date of Birth" value="1985-03-15" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <h4 class="font-medium text-blue-800 mb-2">Coverage Summary</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                                <div>
+                                    <p class="text-blue-700 font-medium">Annual Maximum</p>
+                                    <p class="text-blue-600">$2,000</p>
+                                </div>
+                                <div>
+                                    <p class="text-blue-700 font-medium">Used This Year</p>
+                                    <p class="text-blue-600">$1,250</p>
+                                </div>
+                                <div>
+                                    <p class="text-blue-700 font-medium">Remaining</p>
+                                    <p class="text-blue-600">$750</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-brown-500 hover:bg-brown-600 text-white px-6 py-2 rounded-md font-medium transition-colors">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Preferences Tab -->
+                <div id="preferences" class="tab-content p-6">
+                    <h3 class="text-lg font-semibold text-brown-700 mb-6">Preferences & Settings</h3>
+                    <form onsubmit="savePreferences(event)" class="space-y-8">
+                        <!-- Communication Preferences -->
+                        <div>
+                            <h4 class="font-medium text-brown-700 mb-4">Communication Preferences</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="rounded border-brown-300 text-brown-500 focus:ring-brown-500">
+                                    <span class="ml-2 text-brown-600">Email appointment reminders</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="rounded border-brown-300 text-brown-500 focus:ring-brown-500">
+                                    <span class="ml-2 text-brown-600">SMS appointment reminders</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-brown-300 text-brown-500 focus:ring-brown-500">
+                                    <span class="ml-2 text-brown-600">Phone call reminders</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="rounded border-brown-300 text-brown-500 focus:ring-brown-500">
+                                    <span class="ml-2 text-brown-600">Treatment updates and newsletters</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Appointment Preferences -->
+                        <div>
+                            <h4 class="font-medium text-brown-700 mb-4">Appointment Preferences</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-brown-700 mb-2">Preferred Time</label>
+                                    <select class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                        <option value="morning" selected>Morning (8AM - 12PM)</option>
+                                        <option value="afternoon">Afternoon (12PM - 5PM)</option>
+                                        <option value="evening">Evening (5PM - 8PM)</option>
+                                        <option value="no-preference">No Preference</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-brown-700 mb-2">Preferred Days</label>
+                                    <select class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                        <option value="weekdays" selected>Weekdays</option>
+                                        <option value="weekends">Weekends</option>
+                                        <option value="no-preference">No Preference</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medical Preferences -->
+                        <div>
+                            <h4 class="font-medium text-brown-700 mb-4">Medical Preferences</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-brown-700 mb-2">Preferred Dentist</label>
+                                    <select class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                        <option value="dr-smith" selected>Dr. Smith</option>
+                                        <option value="dr-wilson">Dr. Wilson</option>
+                                        <option value="dr-brown">Dr. Brown</option>
+                                        <option value="no-preference">No Preference</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-brown-700 mb-2">Anxiety Level</label>
+                                    <select class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                                        <option value="low" selected>Low - I'm comfortable with dental procedures</option>
+                                        <option value="moderate">Moderate - I get a bit nervous</option>
+                                        <option value="high">High - I need extra support and comfort</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-brown-500 hover:bg-brown-600 text-white px-6 py-2 rounded-md font-medium transition-colors">
+                                Save Preferences
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Security Tab -->
+                <div id="security" class="tab-content p-6">
+                    <h3 class="text-lg font-semibold text-brown-700 mb-6">Security Settings</h3>
+                    
+                    <!-- Change Password -->
+                    <div class="mb-8">
+                        <h4 class="font-medium text-brown-700 mb-4">Change Password</h4>
+                        <form onsubmit="changePassword(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Current Password</label>
+                                <input type="password" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">New Password</label>
+                                <input type="password" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brown-700 mb-2">Confirm New Password</label>
+                                <input type="password" class="w-full px-3 py-2 border border-brown-200 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-brown-500">
+                            </div>
+                            <button type="submit" class="bg-brown-500 hover:bg-brown-600 text-white px-4 py-2 rounded-md font-medium transition-colors">
+                                Update Password
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Two-Factor Authentication -->
+                    <div class="mb-8">
+                        <h4 class="font-medium text-brown-700 mb-4">Two-Factor Authentication</h4>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                            <div class="flex items-center">
+                                <span class="text-yellow-600 text-lg mr-2">⚠️</span>
+                                <div>
+                                    <h5 class="font-medium text-yellow-800">Two-Factor Authentication Disabled</h5>
+                                    <p class="text-yellow-700 text-sm">Enable 2FA for enhanced account security</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="enable2FA()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-medium transition-colors">
+                            Enable Two-Factor Authentication
+                        </button>
+                    </div>
+
+                    <!-- Login Activity -->
+                    <div class="mb-8">
+                        <h4 class="font-medium text-brown-700 mb-4">Recent Login Activity</h4>
+                        <div class="bg-white border border-brown-200 rounded-lg">
+                            <div class="divide-y divide-brown-200">
+                                <div class="p-4 flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium text-brown-700">Current Session</p>
+                                        <p class="text-brown-600 text-sm">Chrome on Windows • Springfield, IL</p>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Active</span>
+                                </div>
+                                <div class="p-4 flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium text-brown-700">January 7, 2024 at 2:30 PM</p>
+                                        <p class="text-brown-600 text-sm">Safari on iPhone • Springfield, IL</p>
+                                    </div>
+                                    <span class="text-brown-500 text-sm">Ended</span>
+                                </div>
+                                <div class="p-4 flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium text-brown-700">January 5, 2024 at 9:15 AM</p>
+                                        <p class="text-brown-600 text-sm">Chrome on Windows • Springfield, IL</p>
+                                    </div>
+                                    <span class="text-brown-500 text-sm">Ended</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Actions -->
+                    <div>
+                        <h4 class="font-medium text-brown-700 mb-4">Account Actions</h4>
+                        <div class="space-y-3">
+                            <button onclick="downloadData()" class="w-full text-left px-4 py-3 border border-brown-200 rounded-lg hover:bg-beige-50 transition-colors">
+                                <div class="flex items-center">
+                                    <span class="text-lg mr-3">📥</span>
+                                    <div>
+                                        <p class="font-medium text-brown-700">Download My Data</p>
+                                        <p class="text-brown-600 text-sm">Get a copy of your account information and medical records</p>
+                                    </div>
+                                </div>
+                            </button>
+                            <button onclick="deactivateAccount()" class="w-full text-left px-4 py-3 border border-red-200 rounded-lg hover:bg-red-50 transition-colors">
+                                <div class="flex items-center">
+                                    <span class="text-lg mr-3">⚠️</span>
+                                    <div>
+                                        <p class="font-medium text-red-700">Deactivate Account</p>
+                                        <p class="text-red-600 text-sm">Temporarily disable your account access</p>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
-        function calculateAge() {
-            const birthdate = event.target.value;
-            if (birthdate) {
-                const today = new Date();
-                const birth = new Date(birthdate);
-                let age = today.getFullYear() - birth.getFullYear();
-                const monthDiff = today.getMonth() - birth.getMonth();
-                
-                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-                    age--;
-                }
-                
-                document.getElementById('ageField').value = age;
-            }
-        }
-
-        function toggleHMOFields(show) {
-            const hmoFields = document.getElementById('hmoFields');
-            if (show) {
-                hmoFields.classList.remove('hidden');
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('collapsed');
+            
+            // Change toggle icon
+            if (sidebar.classList.contains('collapsed')) {
+                toggleIcon.textContent = '→';
             } else {
-                hmoFields.classList.add('hidden');
+                toggleIcon.textContent = '☰';
             }
         }
 
-        function toggleAuthFields(show) {
-            const authFields = document.getElementById('authFields');
-            if (show) {
-                authFields.classList.remove('hidden');
-            } else {
-                authFields.classList.add('hidden');
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab button
+            event.target.classList.add('active');
+        }
+
+        function goToDashboard() {
+            showNotification('Returning to dashboard...');
+        }
+
+        function savePersonalInfo(event) {
+            event.preventDefault();
+            showNotification('Personal information saved successfully!');
+        }
+
+        function saveContactInfo(event) {
+            event.preventDefault();
+            showNotification('Contact details saved successfully!');
+        }
+
+        function saveInsuranceInfo(event) {
+            event.preventDefault();
+            showNotification('Insurance information saved successfully!');
+        }
+
+        function savePreferences(event) {
+            event.preventDefault();
+            showNotification('Preferences saved successfully!');
+        }
+
+        function changePassword(event) {
+            event.preventDefault();
+            showNotification('Password updated successfully!');
+        }
+
+        function enable2FA() {
+            showNotification('Two-factor authentication setup initiated...');
+        }
+
+        function downloadData() {
+            showNotification('Preparing your data download...');
+        }
+
+        function deactivateAccount() {
+            if (confirm('Are you sure you want to deactivate your account? This action can be reversed by contacting support.')) {
+                showNotification('Account deactivation process started...');
             }
         }
 
-        function handleFileUpload(input, previewId) {
-            const file = input.files[0];
-            const preview = document.getElementById(previewId);
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.textContent = message;
             
-            if (file) {
-                preview.innerHTML = `
-                    <div class="flex items-center justify-between bg-blue-50 p-3 rounded-lg">
-                        <div class="flex items-center">
-                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z" clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="text-sm text-gray-700">${file.name}</span>
-                        </div>
-                        <button type="button" onclick="clearFile('${input.id}', '${previewId}')" class="text-red-500 hover:text-red-700">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                `;
-                preview.classList.remove('hidden');
-            }
-        }
-
-        function clearFile(inputId, previewId) {
-            document.getElementById(inputId).value = '';
-            document.getElementById(previewId).classList.add('hidden');
-        }
-
-        document.getElementById('patientForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show success message
-            const successMessage = document.createElement('div');
-            successMessage.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-            successMessage.innerHTML = `
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    Patient information submitted successfully!
-                </div>
-            `;
-            
-            document.body.appendChild(successMessage);
+            document.body.appendChild(notification);
             
             setTimeout(() => {
-                successMessage.remove();
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
             }, 3000);
-        });
+        }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98b5d6215535b9fb',t:'MTc1OTkyODU4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98d61856569bbc40',t:'MTc2MDI2Njg0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

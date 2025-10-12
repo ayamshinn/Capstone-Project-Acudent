@@ -127,6 +127,7 @@
         background-color: var(--color-primary);
         width: 90%;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        
     }
 
     .sidebar-profile-info-container {
@@ -143,6 +144,7 @@
         border-radius: 50%;
         overflow: hidden;
         background-color: var(--color-secondary);
+        border: 1px solid #50280348;
     }
 
     .sidebar-userprofile-img img {
@@ -472,7 +474,8 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        border: 1px solid var(--color-text);
+        border: 1px solid #50280348;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, .15);
         overflow: hidden;
         cursor: pointer;
         flex-shrink: 0;
@@ -552,7 +555,7 @@
     }
 
     .main-content-container {
-        padding: 20px 20px 10px 10px;
+        padding: 10px 20px 10px 10px;
         min-height: calc(100vh - 60px);
         transition: margin-left 0.3s ease;
     }
@@ -804,28 +807,12 @@
 
 
     /* =========================Extra Large Desktops =========================*/
-    @media screen and (max-width: 1400px) {}
-
-
-
-
-
-    /* =========================Desktops =========================*/
-    @media screen and (max-width: 1200px) {
-
+    @media screen and (max-width: 1400px) {
         /* ============Topbar============ */
         .icon-bell-notif {
             margin-right: 1rem !important;
         }
-    }
-
-
-
-
-
-    /* =========================Small Laptops========================= */
-    @media screen and (max-width: 992px) {
-
+        
         /* =============Sidebar============ */
         .patient-sidebar-container {
             width: 80px;
@@ -982,6 +969,26 @@
             left: 80px;
             width: 100%;
         }
+    }
+
+
+
+
+
+    /* =========================Desktops =========================*/
+    @media screen and (max-width: 1200px) {
+
+
+    
+    }
+
+
+
+
+
+    /* =========================Small Laptops========================= */
+    @media screen and (max-width: 992px) {
+
     }
 
 

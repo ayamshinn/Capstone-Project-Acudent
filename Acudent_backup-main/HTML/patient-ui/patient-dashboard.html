@@ -1,95 +1,56 @@
 <div class="container-fluid user-patient-dashboard">
 
-  <div class="line mb-4"></div>
+  <div class="line mb-3"></div>
 
-  <!-- 🦷 Dental Tips Section -->
-  <div class="user-patient-healthy-tips d-flex flex-wrap align-items-center justify-content-start mb-4 p-3">
-    <h3 class="me-2 text-primary">🦷 Dental Health Tip of the Day:</h3>
-    <p id="daily-dental-tip" class="mb-0 text-secondary"></p>
-    <script src="../../Javascript/patient-ui/patient-dashboard/dental-tips.js"></script>
+  <div class="patient-dashboard-greeting">
+    <h2>Welcome back, <span id="patient-dashboard-greeting-name">Dracy!</span></h2>
+    <p>Here's a quick overview of your dental health and upcoming appointments.</p>
   </div>
 
-  <!-- 📊 Dashboard Cards (Your original 3) -->
-  <div class="row g-4 mb-4">
-    <div class="col-lg-4 col-md-6">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h4 class="card-title text-primary">Upcoming Appointments</h4>
-          <p class="card-text text-secondary">You have 2 appointments this week.</p>
-        </div>
-      </div>
-    </div>
+  <!-- Dental Tips Section -->
+<!-- Dental Tips Section -->
+<section class="dental-tips-section">
+  <div class="img-loc">
+    <img class="dashboard-banner" src="../../Pictures/patient-ui/background2.png" alt="">
 
-    <div class="col-lg-4 col-md-6">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h4 class="card-title text-primary">Dental Records</h4>
-          <p class="card-text text-secondary">View your past treatments and x-ray results.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h4 class="card-title text-primary">Notifications</h4>
-          <p class="card-text text-secondary">You have 3 unread messages from your dentist.</p>
-        </div>
-      </div>
+    <!-- Text overlay -->
+    <div class="user-patient-healthy-tips">
+      <h3>🦷 Dental Health Tip of the Day:</h3>
+      <p id="daily-dental-tip"></p>
     </div>
   </div>
 
-  <!-- 🗓️ Calendar + Activity/Action Section -->
+  <script src="../../Javascript/patient-ui/patient-dashboard/dental-tips.js"></script>
+</section>
+
+
+
+
+  <!-- Dashboard Cards Section -->
   <div class="row g-4">
-    <!-- Calendar (Left Side) -->
-    <div class="col-lg-8">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h4 class="card-title mb-3 text-primary">Calendar</h4>
-          <div id="calendar"></div>
-        </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="dashboard-card h-100">
+        <h4>Upcoming Appointments</h4>
+        <p>You have 2 appointments this week.</p>
       </div>
     </div>
 
-    <!-- Recent Activity + Quick Actions (Right Side) -->
-    <div class="col-lg-4">
-      <!-- Recent Activity -->
-      <div class="card border-0 shadow-sm mb-4">
-        <div class="card-body">
-          <h4 class="card-title text-primary">Recent Activity</h4>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">🦷 Cleaning appointment confirmed</li>
-            <li class="list-group-item">💬 Dentist sent you a new message</li>
-            <li class="list-group-item">📅 New schedule available next week</li>
-          </ul>
-        </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="dashboard-card h-100">
+        <h4>Dental Records</h4>
+        <p>View your past treatments and x-ray results.</p>
       </div>
+    </div>
 
-      <!-- Quick Actions -->
-      <div class="card border-0 shadow-sm">
-        <div class="card-body">
-          <h4 class="card-title text-primary">Quick Actions</h4>
-          <div class="d-flex flex-column gap-2">
-            <button class="btn btn-outline-primary">Book Appointment</button>
-            <button class="btn btn-outline-success">View Dental Records</button>
-            <button class="btn btn-outline-warning">Message Dentist</button>
-          </div>
-        </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="dashboard-card h-100">
+        <h4>Notifications</h4>
+        <p>You have 3 unread messages from your dentist.</p>
       </div>
     </div>
   </div>
+
+
+
+
 </div>
-
-<!-- Include FullCalendar (CDN) -->
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      height: 450
-    });
-    calendar.render();
-  });
-</script>

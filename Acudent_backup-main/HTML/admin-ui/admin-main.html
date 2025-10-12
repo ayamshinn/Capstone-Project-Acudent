@@ -6,16 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <!-- Add in the <head> of your HTML -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="../../CSS/admin-ui/admin-main.css">
-  <link rel="stylesheet" href="../../CSS/admin-ui/admin-sidebar.css">
-  <link rel="stylesheet" href="../../CSS/admin-ui/admin-navbar.css">
-  <link rel="stylesheet" href="../../CSS/admin-ui/admin-dashboard.css">
-  <link rel="stylesheet" href="../../CSS/admin-ui/admin-appoinment-scheduler.css">
-  <link rel="stylesheet" href="../../CSS/admin-ui/admin-appointment-logs.css">
-  <link rel="stylesheet" href="../../CSS/admin-ui/admin-patient-profile.css">
-  <link rel="stylesheet" href="../../CSS/admin-ui/admin-patient-profile-info.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
   </style>
@@ -25,342 +17,181 @@
 
 <body>
 
-  <!--Navigation bar-->
-  <nav class="Navbar fixed-top">
-    <div class="top-nav">
-      <div class="container-lg d-flex justify-content-between align-items-center">
+  <!-- ============================Main Container============================ -->
+  <div class="user-patient-main-container container-fluid d-flex px-0">
 
-        <!-- Left: Logo -->
-        <div class="mapru-logo">
-          <img src="../../Pictures/user-interface/banners-images-logo/logo.png" alt="Logo">
+    <!-- ============================Sidebar Container============================ -->
+
+    <aside class="patient-sidebar-container" id="patient-sidebar-container">
+      <!-- Logo -->
+      <div class="sidebar-top-logo mx-3">
+        <div class="toggle-sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+        <img src="../../Pictures/user-interface/banners-images-logo/logo.png" alt="Clinic Logo" class="logo-img">
+        <div class="logo-text ms-2">
+          <h3 class="mb-0">Mapru</h3>
+          <h5 class="mb-0">Dental Clinic</h5>
+        </div>
+      </div>
+
+      <div class="sidebar-content ps-2 pt-2">
+
+
+        <!-- ============================ Navigation ============================ -->
+        <nav class="sidebar-navigation w-100">
+          <ul class="sidebar-nav-list">
+
+            <li class="sidebar-section-title">Overview</li>
+            <li><a href="#" class="btn-sidebar d-flex align-items-center"
+                data-page="../../HTML/patient-ui/patient-dashboard.html" data-bs-toggle="tooltip"
+                data-bs-placement="right" title="Dashboard">
+                <i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+
+            </li>
+            <!-- ========== Navigation Section ========== -->
+            <li class="sidebar-section-title">Navigation</li>
+
+            <li><a href="../../HTML/patient-ui/patient-information-record.html"
+                class="btn-sidebar d-flex align-items-center"
+                data-page="../../HTML/patient-ui/patient-information-record.html">
+                <i class="fas fa-calendar"></i> <span>Appointments</span></a>
+              <script src="../../Javascript/patient-ui/patient-main.js"></script>
+            </li>
+
+            <li><a href="../../HTML/patient-ui/my-information-clicked.html"
+                class="btn-sidebar d-flex align-items-center"
+                data-page="../../HTML/patient-ui/my-information-clicked.html">
+                <i class="fa-solid fa-id-card-clip"></i> <span>Patient Management</span></a>
+              <script src="../../Javascript/patient-ui/patient-main.js"></script>
+            </li>
+
+            <li><a href="#" class="btn-sidebar d-flex align-items-center" data-page="Record" data-bs-toggle="tooltip"
+                data-bs-placement="right" title="My Record">
+                <i class="fa-solid fa-user-doctor"></i><span>Dentist Management</span></a>
+            </li>
+
+            <li><a href="#" class="btn-sidebar d-flex align-items-center" data-page="Record" data-bs-toggle="tooltip"
+              data-bs-placement="right" title="My Record">
+              <i class="fa-solid fa-user-nurse"></i><span>Staff Management</span></a>
+          </li>
+
+
+            <li><a href="../../HTML/patient-ui/patient-information-record.html"
+                class="btn-sidebar d-flex align-items-center"
+                data-page="../../HTML/patient-ui/patient-information-record.html">
+                <i class="fa-solid fa-toolbox"></i><span>Inventory Management</span></a>
+              <script src="../../Javascript/patient-ui/patient-main.js"></script>
+            </li>
+
+            <li><a href="../../HTML/patient-ui/patient-information-record.html"
+                class="btn-sidebar d-flex align-items-center"
+                data-page="../../HTML/patient-ui/patient-information-record.html">
+                <i class="fas fa-book"></i> <span>Reports</span></a>
+              <script src="../../Javascript/patient-ui/patient-main.js"></script>
+            </li>
+
+            <li><a href="../../HTML/patient-ui/patient-information-record.html"
+              class="btn-sidebar d-flex align-items-center"
+              data-page="../../HTML/patient-ui/patient-information-record.html">
+              <i class="fa-solid fa-screwdriver-wrench"></i> <span>Services</span></a>
+            <script src="../../Javascript/patient-ui/patient-main.js"></script>
+          </li>
+
+
+
+            <!-- ========== Components Section ========== -->
+            <li class="sidebar-section-title">Components</li>
+            <li><a href="#" class="btn-sidebar d-flex align-items-center" data-page="help">
+                <i class="fa-solid fa-circle-question"></i> <span>Help</span></a></li>
+            <li><a href="#" class="btn-sidebar d-flex align-items-center" data-page="help">
+              <i class="fa-solid fa-lock"></i><span>Security</span></a></li>
+                <li><a href="#" class="btn-sidebar d-flex align-items-center" data-page="help">
+                  <i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+
+
+
+          </ul>
+        </nav>
+        <!-- Logout -->
+        <div class="sidebar-logout pe-2">
+          <a href="#" class="btn-sidebar sidebar-logout-btn d-flex align-items-center" id="logoutBtn">
+            <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+          </a>
         </div>
 
-        <!-- Right: Clickable Icons with Badges -->
-        <div class="d-flex align-items-center gap-4">
+      </div>
+    </aside>
 
-          <!-- Message Icon -->
-          <a href="/messages" class="icon-wrapper position-relative" title="Messages">
-            <i class="fas fa-envelope"></i>
-            <span class="badge"></span>
-          </a>
+    <script src="../../Javascript/patient-ui/patient-sidebar.js"></script>
 
-          <!-- Notification Icon -->
-          <a href="/notifications" class="icon-wrapper position-relative" title="Notifications">
-            <i class="fas fa-bell"></i>
-            <span class="badge"></span>
-          </a>
+    <!-- ============================Content Area Container============================ -->
 
-          <!-- Profile Picture -->
-          <div class="nav-item">
-            <img id="admin-profile-pic" class="img-fluid rounded-circle" src="" alt="Profile Picture"
-              style="width: 40px; height: 40px; object-fit: cover;">
-            <h3 id="admin-display" class="ms-1" style="display: inline-block;">Dracy</h3>
+    <main class="user-patient-content-area" id="user-patient-content-area">
+      <!-- ==============================Tobar============================= -->
+      <div class="user-patient-topbar" id="user-patient-topbar">
+        <div class="topbar-left">
+          <div class="toggle">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <h3>Today's Date:</h3>
+          <div class="today-date" id="today-date">
+
+            <script src="../../Javascript/patient-ui/patient-topbar-date.js"></script>
           </div>
         </div>
-      </div>
-    </div>
-  </nav>
-
-
-  <!-- Sidebar (only visible on small screens) -->
-  <nav class="navbar d-md-none fixed-top">
-    <div class="container-fluid">
-      <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
-        ☰ Menu
-      </button>
-      <span class="navbar-text">Dracy</span>
-    </div>
-  </nav>
 
 
 
+        <div class="contentarea-topbar-profile">
+          <div class="notification">
+            <a href="" class="icon-wrapper me-3 position-relative" data-page="Messages" title="Messages">
+              <i class="fa-solid fa-envelope"></i>
+              <span class="badge message-badge">1</span>
+            </a>
 
-  <div class="container-fluid">
-    <div class="row min-vh-100">
+            <a href="" class="icon-wrapper icon-bell-notif me-5 position-relative" data-page="Notification"
+              title="Notifications">
+              <i class="fas fa-bell"></i>
+              <span class="badge system-notif-badge">1</span>
+            </a>
 
-      <!-- Offcanvas Sidebar for Small Screens -->
-      <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="sidebarOffcanvas">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title">Menu</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-          <div class="text-center mb-4">
-            <img id="profile-pic" class="img-fluid rounded-circle mb-2 mt-5" src="" alt="Profile Picture"
-              style="width: 100px; height: 100px; object-fit: cover;">
-            <h3 id="username-display" class="mt-4 mb-5">Dracy</h3>
           </div>
-          <nav class="nav flex-column nav-buttons">
-            <button class="btn w-100 mt-3" data-page="../../HTML/patient-ui/dashboard-clicked.html">
-              <i class="fas fa-home"></i>Dashboard
-            </button>
-            <button class="btn w-100 mt-3 " data-page="../../HTML/patient-ui/my-information-clicked.html">
-              <i class="fas fa-user"></i>My Information
-            </button>
-            <button class="btn w-100 mt-3 " data-page="../../HTML/patient-ui/appointment-clicked.html">
-              <i class="fas fa-calendar"></i>Appointments
-            </button>
-            <button class="btn btn-danger w-100 mt-5">Log out</button>
-          </nav>
+          <h4 class="user-patient-topbar-profile-name" id="user-patient-profilename">Malibu, Dracy</h4>
+          <div class="contentarea-topbar-user">
+            <img src="assets/imgs/customer01.jpg" alt="">
+          </div>
         </div>
+
       </div>
 
-      <!-- Sidebar for md+ screens -->
-      <div class="container-fluid">
-        <div class="row d-flex">
 
-          <!-- Sidebar -->
-          <aside class="col-md-3 col-lg-2 d-none d-md-block p-4 sidebar mt-3">
-            <div class="text-center mb-4">
-              <img id="profile-pic" class="img-fluid rounded-circle mb-2" src="" alt="Profile Picture"
-                style="width: 100px; height: 100px; object-fit: cover; margin-top: 8rem;">
-              <h3 id="username-display" class="mt-4 mb-3">Dracy</h3>
-            </div>
-            <nav class="nav flex-column nav-buttons">
-              <button class="btn w-100 mt-2" tabindex="0" data-target="admin-dashboard">
-                <i class="fas fa-home"></i> Dashboard
-              </button>
+      <div class="main-content-container">
 
-              <div class="mt-2">
-                <button class="btn w-100 d-flex justify-content-start" data-bs-toggle="collapse"
-                  data-bs-target="#appointmentSubmenu" aria-expanded="false">
-                  <span class="arrow"><i class="fas fa-calendar"></i> Appointment</span>
-                  <i class="fas fa-chevron-down ms-auto"></i>
-                </button>
+        <div class="user-patient-dashboard-main-container" id="user-patient-dashboard">
+          <script src="../../Javascript/patient-ui/patient-main.js"></script>
+        </div>
+        <div class="user-patient-myinformation">
+          <div id="content-area"></div>
+        </div>
+        <div class="user-patient-myapppointment">
 
-                <div id="appointmentSubmenu" class="collapse">
-                  <button class="btn w-100" tabindex="0" data-target="admin-appointment-scheduler">
-                    <span><i class="fas fa-clock"></i> Appointment & Scheduler</span>
-                  </button>
-                  <button class="btn w-100" tabindex="0" data-target="admin-appointment-logs">
-                    <span><i class="fas fa-history"></i>Appointment Logs</span>
-                  </button>
-                </div>
-              </div>
+        </div>
+        <div class="user-patient-help">
 
-              <button class="btn w-100 mt-2" tabindex="0" data-target="admin-patient-profiles">
-                <i class="fas fa-user"></i> Patient
-              </button>
-              <button class="btn w-100 mt-2" data-page="../../HTML/patient-ui/appointment-clicked.html">
-                <i class="fas fa-user"></i> Dentist
-              </button>
-              <button class="btn w-100 mt-2" data-page="../../HTML/patient-ui/appointment-clicked.html">
-                <i class="fas fa-box"></i> Inventory
-              </button>
-              <button class="btn w-100 mt-2" data-page="../../HTML/patient-ui/appointment-clicked.html">
-                <i class="fas fa-credit-card"></i> Payment
-              </button>
-              <button class="btn w-100 mt-2" data-page="../../HTML/patient-ui/appointment-clicked.html">
-                <i class="fas fa-user"></i> Admin
-              </button>
-              <button class="btn w-100 mt-3">Log out</button>
-            </nav>
-          </aside>
+        </div>
+        <div class="user-patient-backtohome">
 
+        </div>
+        <div class="user-patient-logout">
 
-          <!-- Dashboard -->
-          <section id="admin-dashboard" class="admin-dashboard-container p-5 mt-5">
-            <div class="admin-dashboard  p-5 mt-5">
-              <div class="admin-box text-center" role="button" tabindex="0" data-target="">
-                <h3>Patient Appointment</h3>
-                <span id="admin-count"></span>
-              </div>
-              <div class="admin-box text-center">
-                <h3>Patients</h3>
-                <span id="admin-count"></span>
-              </div>
-              <div class="admin-box text-center">
-                <h3>Dentist</h3>
-                <span id="admin-count"></span>
-              </div>
-              <div class="admin-box text-center mt-2">
-                <h3>Inventory</h3>
-                <span id="admin-count"></span>
-              </div>
-              <div class="admin-box text-center mt-2">
-                <h3>Payment</h3>
-                <span id="admin-count"></span>
-              </div>
-              <div class="admin-box text-center mt-2">
-                <h3>Admin</h3>
-                <span id="admin-count"></span>
-              </div>
-            </div>
-          </section>
-
-          <!---Appointment Scheduler-->
-          <section id="admin-appointment-scheduler" class="admin-appointment-container">
-            <div class="admin-appointment">
-              <div class="today-appointment">
-                <h3>Today's Appointment</h3>
-              </div>
-              <br>
-
-              <table class="table admin-appointment-type">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Time</th>
-                    <th>Dentist</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>John Doe</td>
-                    <td>Cleaning</td>
-                    <td>10:00 AM</td>
-                    <td>Dr. Smith</td>
-                    <td>Confirmed</td>
-                  </tr>
-                </tbody>
-                <tbody>
-                  <tr>
-                    <td>John Doe</td>
-                    <td>Cleaning</td>
-                    <td>10:00 AM</td>
-                    <td>Dr. Smith</td>
-                    <td>Confirmed</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-
-          <!----Appointment Logs---->
-          <section id="admin-appointment-logs" class="admin-appointment-log-container">
-            <div class="admin-appointment-logs">
-              <div class="appointment-logs">
-                <h3>Appointment Logs</h3>
-              </div>
-              <br>
-
-              <!-- Search bar -->
-              <div class="search-wrapper">
-                <input type="text" placeholder="Search" name="admin-logs-searchbar" class="adminlogs-searchbar">
-                <i class="fas fa-search"></i>
-              </div>
-              <br>
-
-              <!-- Table for logs -->
-              <table class="table admin-logs-type">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                    <th>Dentist</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>John Doe</td>
-                    <td>Cleaning</td>
-                    <td>01/24/02</td>
-                    <td>Dr. Smith</td>
-                    <td>Confirmed</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <!---Patient Profile Section-->
-          <section id="admin-patient-profiles" class="admin-patient-profiles-container">
-            <div class="admin-patient-profiles">
-              <div class="patient-profile">
-                <h3>Patient Profiles</h3>
-              </div>
-
-              <div class="search-wrapper-patient">
-                <input type="text" name="admin-patient-profiles-searchbar" class="adminpatient-searchbar">
-                <i class="fas fa-search"></i>
-              </div>
-              <br>
-              <div class="patient-profile-box-container" id="patient-list">
-                <div class="patient-profile-box" tabindex="0" data-target="admin-patientprofile-info">
-                  <img id="patient-profileforadmin">
-                  <h3 id="patient-nameforadmin"></h3>
-                  <span id="patientcpnum"></span>
-                </div>
-                
-              </div>
-            </div>
-          </section>
-
-          <section id="admin-patientprofile-info" class="admin-patientprofiles-info-container">
-            <div class="admin-patientprofiles-info">
-              <div class="patientprofile-info">
-                <h3>Patient Profiles</h3>
-              </div>
-
-              <div class="admin-patient-info">
-                <div class="admin-patient-general-info">
-                  <h3>General Information</h3>
-                  <div class="admin-patientinfo">
-                    <p id="admin-patient-name">Name: <span id="patient-name-text"></span></p >
-                    <p id="admin-patient-birthday">Birthday: <span id="patient-birthday-text"></span></p >
-                    <p id="admin-patient-sex">Sex: <span id="patient-sex-text"></span></p>
-                    <p id="admin-patient-address">Address: <span id="patient-address-text"></span></p>
-                    <p id="admin-patient-phonenum">Phone: <span id="patient-phonenum-text"></span></p>
-                  </div>
-                </div>
-
-                <div class="admin-patient-anamnesia">
-                  <h3>Anamnesia</h3>
-                  <div class="admin-patientinfo">
-                    <p id="admin-patient-allergy">Allergy: <span id="patient-allergy-text"></span></p>
-                    <p id="admin-patient-cdisease">Chronic Disease: <span id="patient-cdisease-text"></span></p>
-                    <p id="admin-patient-btype">Blood Type: <span id="patient-btype-text"></span></p >
-                  </div>
-                </div>
-              </div>
-
-              <div class="search-wrapper-patient-info">
-                <input type="text" name="admin-patient-info-searchbar" class="adminpatient-info-searchbar">
-                <i class="fas fa-search"></i>
-              </div>
-            </div>
-          </section>
-
-
-
-
-
-          <script>
-            document.addEventListener("DOMContentLoaded", () => {
-              const boxes = document.querySelectorAll(".admin-box");
-              const buttons = document.querySelectorAll("[data-target]"); // sidebar buttons
-              const sections = document.querySelectorAll("section");
-
-
-              // Default: show dashboard
-              document.getElementById("admin-dashboard").classList.add("active");
-
-              buttons.forEach(btn => {
-                btn.addEventListener("click", () => {
-                  const targetId = btn.getAttribute("data-target");
-
-                  // Skip if no target (e.g., logout button)
-                  if (!targetId) return;
-
-                  // Hide all sections
-                  sections.forEach(sec => sec.classList.remove("active"));
-
-                  // Show the selected section
-                  document.getElementById(targetId).classList.add("active");
-                });
-              });
-            });
-          </script>
         </div>
       </div>
-
-    </div>
+    </main>
   </div>
+
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

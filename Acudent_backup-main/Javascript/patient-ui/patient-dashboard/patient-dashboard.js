@@ -61,3 +61,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const calendarEl = document.getElementById('calendar');
+
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    height: 500,
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    events: [
+      { title: 'Consultation - Dr. Santos', start: '2025-10-10' },
+      { title: 'Dental Cleaning', start: '2025-10-12' },
+      { title: 'Follow-up Checkup', start: '2025-10-14' }
+    ]
+  });
+
+  calendar.render();
+});
+
